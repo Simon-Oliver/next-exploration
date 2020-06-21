@@ -1,46 +1,49 @@
 const fetch = require("node-fetch")
-import {useEffect, useState} from "react"
+import React, { useState, useEffect, useRef } from 'react';
 
 const fetchData = async () => {
     const res = await fetch("http://localhost:3000/api/user")
     const data = await res.json()
-    console.log(data.temp)
-    //return data.temp
+    return data.temp
 } 
+
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 
 
 const Temp = () =>{
     const [temp, setTemp] = useState(0);
-    const [loading, setLoading] = useState(false);
+    let [delay, setDelay] = useState(1000);
 
-    useEffect(() => {
-        if (loading) {
-        const interval = setInterval(async () => {
-            const data = await fetchData()
-            setTemp(() => data);
-            setLoading(false);
-          }, 1000);
-          return () => clearInterval(interval);
-            }
-        }, [loading]);
-
-setLoading(true);
-
+  useInterval( async () => {
+    // Your custom logic here
+    const data = await fetchData()
+    console.log(data)
+    setTemp(data)
+  }, delay);
    
 
     return( <p className="description">
           {temp}
         </p>)
-  }
-  
-  // This gets called on every request
-  export async function getServerSideProps() {
-    // Fetch data from external API
-    const res = await fetch(`http://localhost:3000/api/user`)
-    const data = await res.json()
-  
-    // Pass data to the page via props
-    return { props: { data } }
   }
   
   export default Temp
