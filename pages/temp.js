@@ -1,4 +1,4 @@
-const fetch = require("node-fetch")
+import fetch from "node-fetch"
 import React, { useState, useEffect, useRef } from 'react';
 
 const fetchData = async () => {
@@ -36,7 +36,7 @@ const Temp = () =>{
   useInterval( async () => {
     // Your custom logic here
     const data = await fetchData()
-    console.log(data)
+    console.log(data, Date.toString(Date.now()))
     setTemp(data)
   }, delay);
    
