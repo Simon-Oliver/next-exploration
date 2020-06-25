@@ -1,12 +1,11 @@
-import fetch from "node-fetch"
+import fetch from 'node-fetch';
 import React, { useState, useEffect, useRef } from 'react';
 
 const fetchData = async () => {
-    const res = await fetch("http://localhost:3000/api/user")
-    const data = await res.json()
-    return data.temp
-} 
-
+  const res = await fetch('http://localhost:3000/api/user');
+  const data = await res.json();
+  return data.temp;
+};
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -28,22 +27,18 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
+const Temp = () => {
+  const [temp, setTemp] = useState(0);
+  let [delay, setDelay] = useState(1000);
 
-const Temp = () =>{
-    const [temp, setTemp] = useState(0);
-    let [delay, setDelay] = useState(1000);
-
-  useInterval( async () => {
+  useInterval(async () => {
     // Your custom logic here
-    const data = await fetchData()
-    console.log(data, Date.toString(Date.now()))
-    setTemp(data)
+    const data = await fetchData();
+    console.log(data);
+    setTemp(data);
   }, delay);
-   
 
-    return( <p className="description">
-          {temp}
-        </p>)
-  }
-  
-  export default Temp
+  return <p className="description">{temp}</p>;
+};
+
+export default Temp;
