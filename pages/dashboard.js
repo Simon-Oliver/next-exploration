@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     display: 'flex',
+    justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
