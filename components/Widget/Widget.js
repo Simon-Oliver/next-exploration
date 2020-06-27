@@ -5,7 +5,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import moment from 'moment';
 
 const useStyles = makeStyles({
   root: {
@@ -26,13 +25,18 @@ const useStyles = makeStyles({
 
 export default function SimpleCard() {
   const classes = useStyles();
-  const t = moment().set('minute', 5);
-
-  const [timer, setTimer] = useState(t);
+  const [timer, setTimer] = useState('');
+  const [dateTime, setDateTime] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
-  function toggle() {
+  function toggle(e) {
+    console.log(e.target);
+    var countDownDate = new Date();
+    countDownDate.setMinutes(countDownDate.getMinutes() + 30);
+    countDownDate.setSeconds(countDownDate.getSeconds() + 2);
+    countDownDate.getTime();
+    setDateTime(countDownDate);
     setIsActive(!isActive);
   }
 
@@ -41,12 +45,24 @@ export default function SimpleCard() {
     setIsActive(false);
   }
 
+  //   useEffect(() => {}, []);
+
   useEffect(() => {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
+        var now = new Date().getTime();
+        const distance = dateTime - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        console.log(distance, minutes, seconds);
+
+        setTimer(`${minutes}:${seconds}`);
         setSeconds((seconds) => seconds + 1);
-        setTimer(timer - moment());
       }, 1000);
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
@@ -59,11 +75,11 @@ export default function SimpleCard() {
       <CardContent>
         <Typography variant="h5" component="h2">
           TIME: {seconds}
-          Timer: {timer.format('mm:ss')}
+          Timer: {timer}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={toggle}>
+        <Button size="small" onClick={(e) => toggle(e)}>
           Start
         </Button>
       </CardActions>
