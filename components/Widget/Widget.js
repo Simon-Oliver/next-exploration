@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles({
   root: {
@@ -73,6 +74,9 @@ export default function SimpleCard() {
   return (
     <Card className={classes.root}>
       <CardContent>
+        <form className={classes.root} noValidate autoComplete="off">
+          <TextField id="standard-basic" label="Standard" />
+        </form>
         <Typography variant="h5" component="h2">
           TIME: {seconds}
           Timer: {timer}
