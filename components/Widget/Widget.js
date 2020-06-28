@@ -27,6 +27,7 @@ const useStyles = makeStyles({
 export default function SimpleCard() {
   const classes = useStyles();
   const [timer, setTimer] = useState('');
+  const [time, setTime] = useState({ minutes: 0, seconds: 0 });
   const [dateTime, setDateTime] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
@@ -34,8 +35,8 @@ export default function SimpleCard() {
   function toggle(e) {
     console.log(e.target);
     var countDownDate = new Date();
-    countDownDate.setMinutes(countDownDate.getMinutes() + 30);
-    countDownDate.setSeconds(countDownDate.getSeconds() + 2);
+    countDownDate.setMinutes(countDownDate.getMinutes() + Number(time.minutes));
+    countDownDate.setSeconds(countDownDate.getSeconds() + (Number(time.seconds) + 2));
     countDownDate.getTime();
     setDateTime(countDownDate);
     setIsActive(!isActive);
@@ -71,11 +72,38 @@ export default function SimpleCard() {
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
+  const changeHandler = (e) => {
+    console.log(e.target.value);
+    console.log(e.target.id);
+
+    setTime({ ...time, [e.target.id]: e.target.value });
+  };
+
   return (
     <Card className={classes.root}>
       <CardContent>
-        <form className={classes.root} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Standard" />
+        <form
+          onChange={(e) => changeHandler(e)}
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="minutes"
+            label="Minutes"
+            type="minutes"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            id="seconds"
+            label="Seconds"
+            type="seconds"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
         </form>
         <Typography variant="h5" component="h2">
           TIME: {seconds}

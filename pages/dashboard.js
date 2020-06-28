@@ -150,7 +150,6 @@ function ResponsiveDrawer(props) {
         <div className={classes.container}>
           <Widget></Widget>
           <Widget></Widget>
-          <Widget></Widget>
         </div>
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
