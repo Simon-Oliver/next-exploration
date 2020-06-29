@@ -56,14 +56,19 @@ export default function SimpleCard() {
         var now = new Date().getTime();
         const distance = dateTime - now;
 
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        if (time.minutes > 90) {
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          setTimer(`${hours}:${minutes}:${seconds}`);
+        } else if (time.minutes <= 90) {
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor(distance / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          setTimer(`${minutes}:${seconds}`);
+        }
 
-        console.log(distance, minutes, seconds);
-
-        setTimer(`${minutes}:${seconds}`);
         setSeconds((seconds) => seconds + 1);
       }, 1000);
     } else if (!isActive && seconds !== 0) {
