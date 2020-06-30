@@ -53,9 +53,10 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     display: 'flex',
-    justifyContent: 'space-around',
+    // justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    gap: theme.spacing(1),
   },
 }));
 

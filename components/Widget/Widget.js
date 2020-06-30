@@ -7,9 +7,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 275,
+    minWidth: 100,
   },
   bullet: {
     display: 'inline-block',
@@ -22,7 +22,11 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-});
+  label: {
+    margin: theme.spacing(1),
+    width: '10ch',
+  },
+}));
 
 export default function SimpleCard() {
   const classes = useStyles();
@@ -94,25 +98,26 @@ export default function SimpleCard() {
           autoComplete="off"
         >
           <TextField
+            className={classes.label}
             id="minutes"
             label="Minutes"
-            type="minutes"
+            type="number"
             InputLabelProps={{
               shrink: true,
             }}
           />
           <TextField
+            className={classes.label}
             id="seconds"
             label="Seconds"
-            type="seconds"
+            type="number"
             InputLabelProps={{
               shrink: true,
             }}
           />
         </form>
         <Typography variant="h5" component="h2">
-          TIME: {seconds}
-          Timer: {timer}
+          {timer}
         </Typography>
       </CardContent>
       <CardActions>
