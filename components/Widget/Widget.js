@@ -8,8 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    minWidth: 100,
+  card: {
+    width: '220px',
+    marginRight: theme.spacing(2),
   },
   bullet: {
     display: 'inline-block',
@@ -24,26 +25,26 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     margin: theme.spacing(1),
-    width: '10ch',
+    width: '9ch',
   },
 }));
 
 export default function SimpleCard() {
   const classes = useStyles();
-  const [timer, setTimer] = useState('');
+  const [timer, setTimer] = useState('00:00');
   const [time, setTime] = useState({ minutes: 0, seconds: 0 });
   const [dateTime, setDateTime] = useState(0);
-  const [seconds, setSeconds] = useState(0);
+  const [stateSeconds, setSeconds] = useState(1);
   const [isActive, setIsActive] = useState(false);
 
   function toggle(e) {
+    setIsActive(!isActive);
     console.log(e.target);
     var countDownDate = new Date();
     countDownDate.setMinutes(countDownDate.getMinutes() + Number(time.minutes));
     countDownDate.setSeconds(countDownDate.getSeconds() + (Number(time.seconds) + 2));
     countDownDate.getTime();
     setDateTime(countDownDate);
-    setIsActive(!isActive);
   }
 
   function reset() {
@@ -59,6 +60,11 @@ export default function SimpleCard() {
       interval = setInterval(() => {
         var now = new Date().getTime();
         const distance = dateTime - now;
+        setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
+
+        if (stateSeconds === 0) {
+          setIsActive(false);
+        }
 
         if (time.minutes > 90) {
           var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -72,14 +78,13 @@ export default function SimpleCard() {
           var seconds = Math.floor((distance % (1000 * 60)) / 1000);
           setTimer(`${minutes}:${seconds}`);
         }
-
-        setSeconds((seconds) => seconds + 1);
       }, 1000);
-    } else if (!isActive && seconds !== 0) {
+    } else if (!isActive && stateSeconds === 0) {
+      console.log('TIMER DONE --------------');
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, seconds]);
+  }, [isActive, stateSeconds]);
 
   const changeHandler = (e) => {
     console.log(e.target.value);
@@ -89,36 +94,36 @@ export default function SimpleCard() {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.card}>
       <CardContent>
-        <form
-          onChange={(e) => changeHandler(e)}
-          className={classes.root}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            className={classes.label}
-            id="minutes"
-            label="Minutes"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <TextField
-            className={classes.label}
-            id="seconds"
-            label="Seconds"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </form>
-        <Typography variant="h5" component="h2">
-          {timer}
-        </Typography>
+        {isActive ? (
+          <Typography variant="h3" component="h2">
+            {timer}
+          </Typography>
+        ) : (
+          <form onChange={(e) => changeHandler(e)} noValidate autoComplete="off">
+            <TextField
+              className={classes.label}
+              value={time.minutes}
+              id="minutes"
+              label="Minutes"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              className={classes.label}
+              value={time.seconds}
+              id="seconds"
+              label="Seconds"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </form>
+        )}
       </CardContent>
       <CardActions>
         <Button size="small" onClick={(e) => toggle(e)}>
