@@ -60,11 +60,8 @@ export default function SimpleCard() {
       interval = setInterval(() => {
         var now = new Date().getTime();
         const distance = dateTime - now;
-        setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
 
-        if (stateSeconds === 0) {
-          setIsActive(false);
-        }
+        setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
 
         if (time.minutes > 90) {
           var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -127,7 +124,7 @@ export default function SimpleCard() {
       </CardContent>
       <CardActions>
         <Button size="small" onClick={(e) => toggle(e)}>
-          Start
+          {isActive ? 'Stop' : 'Start'}
         </Button>
       </CardActions>
     </Card>
