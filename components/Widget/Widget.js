@@ -36,6 +36,7 @@ export default function SimpleCard() {
   const [dateTime, setDateTime] = useState(0);
   const [stateSeconds, setSeconds] = useState(1);
   const [isActive, setIsActive] = useState(false);
+  const [isActiveAlarm, setIsActiveAlarm] = useState(false);
 
   function toggle(e) {
     setIsActive(!isActive);
@@ -52,6 +53,12 @@ export default function SimpleCard() {
     setIsActive(false);
   }
 
+  function leadingZero(time) {
+    return time < 10 ? `0${time}` : time;
+  }
+
+  function alarm() {}
+
   //   useEffect(() => {}, []);
 
   useEffect(() => {
@@ -67,13 +74,13 @@ export default function SimpleCard() {
           var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          setTimer(`${hours}:${minutes}:${seconds}`);
+          setTimer(`${leadingZero(hours)}:${leadingZero(minutes)}:${leadingZero(seconds)}`);
         } else if (time.minutes <= 90) {
           var days = Math.floor(distance / (1000 * 60 * 60 * 24));
           var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           var minutes = Math.floor(distance / (1000 * 60));
           var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          setTimer(`${minutes}:${seconds}`);
+          setTimer(`${leadingZero(minutes)}:${leadingZero(seconds)}`);
         }
       }, 1000);
     } else if (!isActive && stateSeconds === 0) {
