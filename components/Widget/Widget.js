@@ -70,6 +70,8 @@ export default function SimpleCard() {
     setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
 
     if (isActive && stateSeconds > 0) {
+      console.log(distance);
+
       if (time.minutes > 90) {
         var hours = Math.floor(
           (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
