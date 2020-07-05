@@ -33,6 +33,7 @@ export default function SimpleCard() {
   const classes = useStyles();
   const [timer, setTimer] = useState('00:00');
   const [time, setTime] = useState({ minutes: 0, seconds: 0 });
+  const [name, setName] = useState('');
   const [dateTime, setDateTime] = useState(0);
   const [stateSeconds, setSeconds] = useState(1);
   const [isActive, setIsActive] = useState(false);
@@ -105,6 +106,10 @@ export default function SimpleCard() {
     console.log(e.target.value);
     console.log(e.target.id);
 
+    if (e.target.id === 'name') {
+      setName(e.target.value);
+    }
+
     setTime({ ...time, [e.target.id]: e.target.value });
   };
 
@@ -112,12 +117,17 @@ export default function SimpleCard() {
     <Card className={classes.card}>
       <CardContent>
         {isActive ? (
-          <Typography variant="h3" component="h2">
-            {timer}
-          </Typography>
+          <div>
+            <Typography variant="h5" component="h5">
+              {name}
+            </Typography>
+            <Typography variant="h3" component="h3">
+              {timer}
+            </Typography>
+          </div>
         ) : (
           <form onChange={(e) => changeHandler(e)} noValidate autoComplete="off">
-            <TextField id="standard-basic" label="Standard" />
+            <TextField value={name} id="name" label="Standard" />
             <TextField
               className={classes.label}
               value={time.minutes}
