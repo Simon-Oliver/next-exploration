@@ -113,6 +113,16 @@ function ResponsiveDrawer(props) {
           <Typography variant="h6" noWrap>
             Responsive drawer
           </Typography>
+          <Typography
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            variant="h6"
+            className={classes.title}
+          >
+            Temp: 100°C
+          </Typography>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
