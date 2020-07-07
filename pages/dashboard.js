@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Container } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -58,13 +59,51 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     gap: theme.spacing(1),
   },
+  title: {
+    flexGrow: 1,
+  },
 }));
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+const fetchData = async () => {
+  const res = await fetch('http://127.0.0.1:8000/temp/dh11');
+  const data = await res.json();
+  return data;
+};
 
 function ResponsiveDrawer(props) {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [temp, setTemp] = useState({});
+  let [delay, setDelay] = useState(1000);
+
+  useInterval(async () => {
+    // Your custom logic here
+    const data = await fetchData();
+    console.log('------>', data);
+    setTemp(data);
+  }, delay);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -110,19 +149,13 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap className={classes.title}>
             Responsive drawer
           </Typography>
-          <Typography
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            variant="h6"
-            className={classes.title}
-          >
-            Temp: 100°C
-          </Typography>
+          <Container>
+            <Typography variant="subtitle2">{`Temp. Kitchen: ${temp.temp}°C`}</Typography>
+            <Typography variant="subtitle2">{`Humidity Kitchen: ${temp.humidity}%`}</Typography>
+          </Container>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">

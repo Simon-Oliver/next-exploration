@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import React, { useState, useEffect, useRef } from 'react';
 
 const fetchData = async () => {
-  const res = await fetch('http://localhost:3000/api/user');
+  const res = await fetch('http://127.0.0.1:8000/temp/dh11');
   const data = await res.json();
   return data.temp;
 };
@@ -34,7 +34,7 @@ const Temp = () => {
   useInterval(async () => {
     // Your custom logic here
     const data = await fetchData();
-    console.log(data);
+    console.log('temp component', data);
     setTemp(data);
   }, delay);
 
