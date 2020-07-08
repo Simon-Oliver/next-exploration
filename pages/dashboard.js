@@ -62,6 +62,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  rightContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
+  },
+  rightItem: {
+    alignSelf: 'flex-end',
+  },
 }));
 
 function useInterval(callback, delay) {
@@ -85,7 +93,7 @@ function useInterval(callback, delay) {
 }
 
 const fetchData = async () => {
-  const res = await fetch('http://127.0.0.1:8000/temp/dh11');
+  const res = await fetch('http://192.168.1.10:8000/temp/dh11');
   const data = await res.json();
   return data;
 };
@@ -152,10 +160,16 @@ function ResponsiveDrawer(props) {
           <Typography variant="h6" noWrap className={classes.title}>
             Responsive drawer
           </Typography>
-          <Container>
-            <Typography variant="subtitle2">{`Temp. Kitchen: ${temp.temp}°C`}</Typography>
-            <Typography variant="subtitle2">{`Humidity Kitchen: ${temp.humidity}%`}</Typography>
-          </Container>
+          <div className={classes.rightContainer}>
+            <Typography
+              className={classes.rightItem}
+              variant="subtitle2"
+            >{`Temp. Kitchen: ${temp.temp}°C`}</Typography>
+            <Typography
+              className={classes.rightItem}
+              variant="subtitle2"
+            >{`Humidity Kitchen: ${temp.humidity}%`}</Typography>
+          </div>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">

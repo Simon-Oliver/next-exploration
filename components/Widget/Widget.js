@@ -35,7 +35,7 @@ export default function SimpleCard() {
   const [time, setTime] = useState({ minutes: 0, seconds: 0 });
   const [name, setName] = useState('');
   const [dateTime, setDateTime] = useState(0);
-  const [stateSeconds, setSeconds] = useState(1);
+  const [stateMilSeconds, setMilSeconds] = useState(1);
   const [isActive, setIsActive] = useState(false);
   const [isActiveAlarm, setIsActiveAlarm] = useState(false);
 
@@ -66,9 +66,9 @@ export default function SimpleCard() {
     var now = new Date().getTime();
     const distance = dateTime - now;
 
-    setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
+    setMilSeconds(distance);
 
-    if (isActive && stateSeconds > 0) {
+    if (isActive && stateMilSeconds > 0) {
       console.log(distance);
 
       if (time.minutes > 90) {
@@ -79,11 +79,11 @@ export default function SimpleCard() {
       } else if (time.minutes <= 90) {
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor(distance / (1000 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
         setTimer(`${leadingZero(minutes)}:${leadingZero(seconds)}`);
       }
-    } else if (isActive && stateSeconds <= 0) {
+    } else if (isActive && stateMilSeconds <= 0) {
       setTimer('00:00');
       console.log('Alarm!!! ----- Beeep');
     }
@@ -94,13 +94,13 @@ export default function SimpleCard() {
     if (isActive) {
       countDown();
       interval = setInterval(countDown, 1000);
-    } else if (!isActive && stateSeconds === 0) {
+    } else if (!isActive && stateMilSeconds === 0) {
       console.log('TIMER DONE --------------');
       clearInterval(interval);
       reset();
     }
     return () => clearInterval(interval);
-  }, [isActive, stateSeconds]);
+  }, [isActive, stateMilSeconds]);
 
   const changeHandler = (e) => {
     console.log(e.target.value);
