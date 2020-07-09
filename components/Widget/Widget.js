@@ -50,7 +50,7 @@ export default function SimpleCard() {
   }
 
   function reset() {
-    setSeconds(1);
+    setMilSeconds(1);
     setIsActive(false);
   }
 
@@ -58,7 +58,10 @@ export default function SimpleCard() {
     return time < 10 ? `0${time}` : time;
   }
 
-  function alarm() {}
+  function alarm() {
+    setTimer('00:00');
+    console.log('Alarm!!! ----- Beeep');
+  }
 
   //   useEffect(() => {}, []);
 
@@ -66,11 +69,7 @@ export default function SimpleCard() {
     var now = new Date().getTime();
     const distance = dateTime - now;
 
-    setMilSeconds(distance);
-
-    if (isActive && stateMilSeconds > 0) {
-      console.log(distance);
-
+    if (isActive && distance > 0) {
       if (time.minutes > 90) {
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -83,9 +82,8 @@ export default function SimpleCard() {
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
         setTimer(`${leadingZero(minutes)}:${leadingZero(seconds)}`);
       }
-    } else if (isActive && stateMilSeconds <= 0) {
-      setTimer('00:00');
-      console.log('Alarm!!! ----- Beeep');
+    } else if (isActive && distance <= 0) {
+      alarm();
     }
   };
 

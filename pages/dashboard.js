@@ -104,18 +104,25 @@ function ResponsiveDrawer(props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [temp, setTemp] = useState({});
-  let [delay, setDelay] = useState(1000);
+  let [delay, setDelay] = useState(5000);
 
   useInterval(async () => {
     // Your custom logic here
     const data = await fetchData();
-    console.log('------>', data);
     setTemp(data);
   }, delay);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  useEffect(() => {
+    async function fetching() {
+      const data = await fetchData();
+      setTemp(data);
+    }
+    fetching();
+  }, []);
 
   const drawer = (
     <div>
@@ -158,7 +165,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap className={classes.title}>
-            Responsive drawer
+            Dashboard
           </Typography>
           <div className={classes.rightContainer}>
             <Typography
