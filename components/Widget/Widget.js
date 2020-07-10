@@ -60,6 +60,10 @@ export default function SimpleCard() {
 
   function alarm() {
     setTimer('00:00');
+    var audio = document.getElementById('a1');
+    console.log(audio);
+    audio.play();
+
     console.log('Alarm!!! ----- Beeep');
   }
 
@@ -113,6 +117,7 @@ export default function SimpleCard() {
 
   return (
     <Card className={classes.card}>
+      <audio id="a1" src="/audio/beep.wav"></audio>
       <CardContent>
         {isActive ? (
           <div>
