@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     width: '9ch',
   },
+  red: {
+    backgroundColor: 'red',
+  },
 }));
 
 export default function SimpleCard() {
@@ -37,7 +40,6 @@ export default function SimpleCard() {
   const [dateTime, setDateTime] = useState(0);
   const [stateMilSeconds, setMilSeconds] = useState(1);
   const [isActive, setIsActive] = useState(false);
-  const [isActiveAlarm, setIsActiveAlarm] = useState(false);
 
   function toggle(e) {
     setIsActive(!isActive);
@@ -63,7 +65,6 @@ export default function SimpleCard() {
     var audio = document.getElementById('a1');
     console.log(audio);
     audio.play();
-
     console.log('Alarm!!! ----- Beeep');
   }
 
@@ -116,7 +117,7 @@ export default function SimpleCard() {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card className={`${classes.card}`}>
       <audio id="a1" src="/audio/beep.wav"></audio>
       <CardContent>
         {isActive ? (
