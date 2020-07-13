@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import React, { useState, useEffect, useRef } from 'react';
 
 const fetchData = async () => {
-  const res = await fetch('http://127.0.0.1:8000/temp/dh11');
+  const res = await fetch('http://192.168.1.10:8000/temp');
   const data = await res.json();
   return data.temp;
 };
@@ -38,7 +38,7 @@ const Temp = () => {
     setTemp(data);
   }, delay);
 
-  return <p className="description">{temp}</p>;
+  return <p className="description">{temp.temp}</p>;
 };
 
 export default Temp;

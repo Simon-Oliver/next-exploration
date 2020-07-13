@@ -18,6 +18,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Widget from '../components/Widget/Widget.js';
+import Link from 'next/link';
 
 const drawerWidth = 240;
 
@@ -93,7 +94,7 @@ function useInterval(callback, delay) {
 }
 
 const fetchData = async () => {
-  const res = await fetch('http://192.168.1.10:8000/temp/dh11');
+  const res = await fetch('http://192.168.1.10:8000/temp/si7021');
   const data = await res.json();
   return data;
 };
@@ -129,22 +130,16 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+        {['Dashboard', 'Temp Probe'].map((text, index) => (
+          <Link href="/temp">
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
     </div>
   );
 
