@@ -1,18 +1,16 @@
-import fetch from 'node-fetch';
-import React, { useState, useEffect, useRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Grid from '@material-ui/core/Grid';
-import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
+import fetch from "node-fetch";
+import React, { useState, useEffect, useRef } from "react";
+
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+
+import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
+
+import style from "./temp.module.css";
 
 const fetchData = async () => {
   // const res = await fetch('http://192.168.1.10:8000/temp');
-  const res = await fetch('/api/user');
+  const res = await fetch("/api/user");
   const data = await res.json();
   return data.temp;
 };
@@ -37,59 +35,36 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-const useStyles = makeStyles({
-  root: {
-    width: '8rem',
-    height: '8rem',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  align: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-
-  icon: {
-    fontSize: 60,
-  },
-
-  green: {
-    fontSize: 60,
-    color: 'green',
-  },
-});
-
 const Temp = () => {
-  const classes = useStyles();
+  const { cardIsOn, cardIsOff } = style;
   const [temp, setTemp] = useState(0);
   const [isOn, setOn] = useState(false);
-  let [delay, setDelay] = useState(1000);
+  let [delay, setDelay] = useState(9000);
 
   useInterval(async () => {
     // Your custom logic here
     const data = await fetchData();
-    console.log('temp component', data);
+    console.log("temp component", data);
     setTemp(data);
   }, delay);
 
   const toggle = () => {
     setOn(!isOn);
-    console.log('Toggle Fired');
+    console.log("Toggle Fired");
+    console.log(isOn);
   };
 
   return (
-    <CardActionArea className={classes.root} onClick={toggle}>
-      <Card className={classes.root}>
-        <CardContent className={classes.align}>
-          <Typography align="center">Kitchen</Typography>
-          <EmojiObjectsOutlinedIcon
-            className={isOn ? classes.icon : classes.green}
-          ></EmojiObjectsOutlinedIcon>
-        </CardContent>
-      </Card>
-    </CardActionArea>
+    <Card
+      as="a"
+      className={`${style.card} ${isOn ? cardIsOn : cardIsOff}`}
+      onClick={toggle}
+    >
+      <Card.Body>
+        <Card.Text align="center">Kitchen</Card.Text>
+        <EmojiObjectsOutlinedIcon></EmojiObjectsOutlinedIcon>
+      </Card.Body>
+    </Card>
   );
 };
 
