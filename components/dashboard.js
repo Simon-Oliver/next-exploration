@@ -1,13 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faThermometerThreeQuarters,
-  faTint,
-} from "@fortawesome/free-solid-svg-icons";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import React, { useState, useRef, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThermometerThreeQuarters, faTint } from '@fortawesome/free-solid-svg-icons';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
-import Link from "next/link";
+import style from './dashboard.module.css';
+
+import Link from 'next/link';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -30,7 +29,7 @@ function useInterval(callback, delay) {
 }
 
 const fetchData = async () => {
-  const res = await fetch("http://192.168.1.10:8000/temp/si7021");
+  const res = await fetch('http://192.168.1.10:8000/temp/si7021');
   const data = await res.json();
   return data;
 };
@@ -73,7 +72,7 @@ function ResponsiveDrawer(props) {
             <Nav.Link>Controller</Nav.Link>
           </Link>
         </Nav>
-        <div>
+        <div className={style.nav}>
           <div>
             <FontAwesomeIcon icon={faThermometerThreeQuarters} size="1x" />
             {` ${temp.temp}°C`}

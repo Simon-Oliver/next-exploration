@@ -4,9 +4,16 @@
   width: 8rem;
 }
 .cardIsOn {
-  background: green;
+  color: rgb(100, 201, 100);
 }
 
 .cardIsOff {
-  background: red;
+  color: lightgrey;
+}
+
+.aligner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

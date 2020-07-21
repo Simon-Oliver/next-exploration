@@ -1,16 +1,19 @@
-import fetch from "node-fetch";
-import React, { useState, useEffect, useRef } from "react";
+import fetch from 'node-fetch';
+import React, { useState, useEffect, useRef } from 'react';
 
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
-import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThermometerThreeQuarters, faTint } from '@fortawesome/free-solid-svg-icons';
 
-import style from "./temp.module.css";
+import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
+
+import style from './temp.module.css';
 
 const fetchData = async () => {
   // const res = await fetch('http://192.168.1.10:8000/temp');
-  const res = await fetch("/api/user");
+  const res = await fetch('/api/user');
   const data = await res.json();
   return data.temp;
 };
@@ -44,25 +47,25 @@ const Temp = () => {
   useInterval(async () => {
     // Your custom logic here
     const data = await fetchData();
-    console.log("temp component", data);
+    console.log('temp component', data);
     setTemp(data);
   }, delay);
 
   const toggle = () => {
     setOn(!isOn);
-    console.log("Toggle Fired");
+    console.log('Toggle Fired');
     console.log(isOn);
   };
 
   return (
-    <Card
-      as="a"
-      className={`${style.card} ${isOn ? cardIsOn : cardIsOff}`}
-      onClick={toggle}
-    >
-      <Card.Body>
-        <Card.Text align="center">Kitchen</Card.Text>
-        <EmojiObjectsOutlinedIcon></EmojiObjectsOutlinedIcon>
+    <Card className={style.card} as="a" onClick={toggle}>
+      <Card.Body className={style.aligner}>
+        <Card.Text>Kitchen</Card.Text>
+        <FontAwesomeIcon
+          className={` ${isOn ? cardIsOn : cardIsOff}`}
+          icon={faThermometerThreeQuarters}
+          size="3x"
+        />
       </Card.Body>
     </Card>
   );
