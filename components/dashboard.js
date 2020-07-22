@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThermometerThreeQuarters, faTint } from '@fortawesome/free-solid-svg-icons';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
 
 import style from './dashboard.module.css';
 
@@ -59,30 +60,32 @@ function ResponsiveDrawer(props) {
 
   return (
     <div>
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="/">Navbar</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Link href="/" passHref>
-            <Nav.Link>Bootstrap</Nav.Link>
-          </Link>
-          <Link href="/temp" passHref>
-            <Nav.Link>Temperature</Nav.Link>
-          </Link>
-          <Link href="/index" passHref>
-            <Nav.Link>Controller</Nav.Link>
-          </Link>
-        </Nav>
-        <div className={style.nav}>
+      <Navbar bg="dark" variant="dark" className={style.nav}>
+        <Container>
+          <Navbar.Brand>Navbar</Navbar.Brand>
+          <Nav className="mr-auto">
+            <Link href="/" passHref>
+              <Nav.Link>Bootstrap</Nav.Link>
+            </Link>
+            <Link href="/dashboard" passHref>
+              <Nav.Link>Dashboard</Nav.Link>
+            </Link>
+            <Link href="/index" passHref>
+              <Nav.Link>Controller</Nav.Link>
+            </Link>
+          </Nav>
           <div>
-            <FontAwesomeIcon icon={faThermometerThreeQuarters} size="1x" />
-            {` ${temp.temp}°C`}
-          </div>
+            <div>
+              <FontAwesomeIcon icon={faThermometerThreeQuarters} size="1x" />
+              {` ${temp.temp}°C`}
+            </div>
 
-          <div>
-            <FontAwesomeIcon icon={faTint} size="1x" />
-            {` ${temp.humidity}%`}
+            <div>
+              <FontAwesomeIcon icon={faTint} size="1x" />
+              {` ${temp.humidity}%`}
+            </div>
           </div>
-        </div>
+        </Container>
       </Navbar>
     </div>
   );
