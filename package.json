@@ -19,6 +19,7 @@
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "recharts": "^1.8.5"
   }
 }
