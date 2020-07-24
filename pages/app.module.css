@@ -1,6 +1,8 @@
 .appBG {
   background-color: #454b58;
   height: 100vh;
+  width: 100vw;
+  ;
 }
 
 .appContainer {
