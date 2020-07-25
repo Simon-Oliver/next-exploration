@@ -13,6 +13,15 @@ import {
 } from 'recharts';
 
 const data = [
+  { name: '06:00', temp: 34, hum: 19 },
+  { name: '07:00', temp: 25, hum: 43 },
+  { name: '08:00', temp: 29, hum: 63 },
+  { name: '09:00', temp: 25, hum: 75 },
+  { name: '10:00', temp: 29, hum: 84 },
+  { name: '11:00', temp: 25, hum: 43 },
+  { name: '12:00', temp: 19, hum: 32 },
+  { name: '13:00', temp: 21, hum: 37 },
+  { name: '14:00', temp: 22, hum: 40 },
   { name: '15:00', temp: 25, hum: 55 },
   { name: '16:00', temp: 27, hum: 60 },
   { name: '17:00', temp: 26, hum: 58 },
@@ -20,10 +29,13 @@ const data = [
   { name: '19:00', temp: 30, hum: 78 },
   { name: '20:00', temp: 22, hum: 48 },
   { name: '21:00', temp: 25, hum: 50 },
+  { name: '22:00', temp: 30, hum: 66 },
+  { name: '23:00', temp: 46, hum: 70 },
+  { name: '24:00', temp: 70, hum: 70 },
 ];
 const SimpleAreaChart = () => {
   return (
-    <div style={{ height: '60vh', width: '80vw', background: 'red' }}>
+    <div style={{ height: '80%', width: '100%' }}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart width={800} height={400} data={data} syncId="anyId" margin={{ top: 10 }}>
           <CartesianGrid strokeDasharray="3 3" />
