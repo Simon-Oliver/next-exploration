@@ -1,13 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThermometerThreeQuarters, faTint } from '@fortawesome/free-solid-svg-icons';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
+import React, { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faThermometerThreeQuarters,
+  faTint,
+} from "@fortawesome/free-solid-svg-icons";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Container from "react-bootstrap/Container";
 
-import style from './dashboard.module.css';
+import style from "./dashboard.module.css";
 
-import Link from 'next/link';
+import Link from "next/link";
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -30,12 +33,12 @@ function useInterval(callback, delay) {
 }
 
 const fetchData = async () => {
-  const res = await fetch('http://192.168.1.10:8000/temp/si7021');
+  const res = await fetch("http://192.168.1.10:8000/temp/si7021");
   const data = await res.json();
   return data;
 };
 
-function ResponsiveDrawer(props) {
+function NavBar(props) {
   const [temp, setTemp] = useState({});
   let [delay, setDelay] = useState(5000);
 
@@ -91,4 +94,4 @@ function ResponsiveDrawer(props) {
   );
 }
 
-export default ResponsiveDrawer;
+export default NavBar;

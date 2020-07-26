@@ -1,0 +1,9 @@
+.lineChartContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50vw;
+  height: 50vh;
+  background: #282c34;
+  border-radius: 0.5rem;
+}
