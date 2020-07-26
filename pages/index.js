@@ -16,6 +16,12 @@ import {
 import style from "./lineChart.module.css";
 
 const data = [
+  { name: "00:00", temp: 39, hum: 49 },
+  { name: "01:00", temp: 39, hum: 49 },
+  { name: "02:00", temp: 34, hum: 19 },
+  { name: "03:00", temp: 34, hum: 19 },
+  { name: "04:00", temp: 34, hum: 19 },
+  { name: "05:00", temp: 34, hum: 19 },
   { name: "06:00", temp: 34, hum: 19 },
   { name: "07:00", temp: 25, hum: 43 },
   { name: "08:00", temp: 29, hum: 63 },
@@ -44,10 +50,10 @@ const Graph = () => {
           data={data}
           syncId="anyId"
           margin={{
-            top: 25,
-            right: 50,
-            left: 0,
-            bottom: 25,
+            top: 20,
+            right: 20,
+            left: -20,
+            bottom: 10,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -74,7 +80,6 @@ const Graph = () => {
             fill="#8884d8"
           />
           <Line type="monotone" dataKey="hum" stroke="#82ca9d" />
-          <Brush dataKey="name" margin={{ top: 10 }} />
         </LineChart>
       </ResponsiveContainer>
     </div>
