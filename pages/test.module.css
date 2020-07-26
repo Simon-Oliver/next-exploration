@@ -1,0 +1,12 @@
+.item {
+  margin-top: 64px;
+  height: 30vh;
+  grid-column-start: 1;
+  grid-column-end: 9;
+}
+
+@media (max-width: 1000px) {
+  .item {
+    grid-column: 1 / -1;
+  }
+}

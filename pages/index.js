@@ -16,12 +16,12 @@ import {
 import style from "./lineChart.module.css";
 
 const data = [
-  { name: "00:00", temp: 39, hum: 49 },
-  { name: "01:00", temp: 39, hum: 49 },
-  { name: "02:00", temp: 34, hum: 19 },
-  { name: "03:00", temp: 34, hum: 19 },
-  { name: "04:00", temp: 34, hum: 19 },
-  { name: "05:00", temp: 34, hum: 19 },
+  { name: "00:00", temp: 42, hum: 55 },
+  { name: "01:00", temp: 12, hum: 20 },
+  { name: "02:00", temp: 14, hum: 19 },
+  { name: "03:00", temp: 16, hum: 34 },
+  { name: "04:00", temp: 18, hum: 26 },
+  { name: "05:00", temp: 27, hum: 37 },
   { name: "06:00", temp: 34, hum: 19 },
   { name: "07:00", temp: 25, hum: 43 },
   { name: "08:00", temp: 29, hum: 63 },
@@ -45,15 +45,20 @@ const data = [
 const Graph = () => {
   return (
     <div className={style.lineChartContainer}>
+      <div className={style.line}>
+        <div className={style.heading}>
+          <h5>Temperatur & Humidity</h5>
+        </div>
+      </div>
       <ResponsiveContainer width="90%" height="90%">
         <LineChart
           data={data}
           syncId="anyId"
           margin={{
-            top: 20,
+            top: 5,
             right: 20,
             left: -20,
-            bottom: 10,
+            bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
