@@ -10,3 +10,8 @@
     grid-column: 1 / -1;
   }
 }
+
+.dropdown {
+  width: 450px !important;
+  padding: 5px !important;
+}
