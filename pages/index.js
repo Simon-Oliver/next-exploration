@@ -1,5 +1,8 @@
 import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
+import { useStore } from '../components/store';
+import moment from 'moment';
+
 import {
   LineChart,
   Line,
@@ -15,6 +18,7 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import ChartDropDown from '../components/ChartDropDown';
 
 import style from './lineChart.module.css';
 
@@ -46,16 +50,34 @@ const data = [
   { name: '24:00', temp: 70, hum: 70 },
 ];
 
+const filterData = (startTime, endTime, data) => {
+  console.log(startTime, endTime);
+  const format = 'hh:mm';
+  startTime = moment(startTime, format).subtract(1, 'hours');
+  endTime = moment(endTime, format).add(1, 'hours');
+  const newData = data.filter((e) => {
+    const time = moment(e.name, format);
+    return time.isBetween(startTime, endTime, 'hours');
+  });
+  return newData;
+};
+
 const Graph = () => {
+  const { state, dispatch } = useStore();
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
   return (
     <div className={style.lineChartContainer}>
       <div className={style.heading}>
         <h5>Temperatur & Humidity</h5>
-        <FontAwesomeIcon icon={faChevronDown} size="1x" />
+        <ChartDropDown></ChartDropDown>
       </div>
       <ResponsiveContainer className={style.line} width="90%" height="90%">
         <LineChart
-          data={data}
+          data={filterData(state.chartDateTime.startTime, state.chartDateTime.endTime, data)}
           syncId="anyId"
           margin={{
             top: 5,

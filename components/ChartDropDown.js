@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useStore } from './store';
 
 import { Card, Dropdown, FormControl, Form, Row, Col } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-import style from './test.module.css';
+import style from './ChartDropDown.module.css';
 import moment from 'moment';
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
@@ -26,12 +27,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 // Dropdown needs access to the DOM of the Menu to measure it
 const CustomMenu = React.forwardRef(
   ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
-    const [value, setValue] = useState({
-      startDate: moment().format('YYYY-MM-DD'),
-      endDate: moment().add(7, 'days').format('YYYY-MM-DD'),
-      startTime: '00:00',
-      endTime: '24:00',
-    });
+    const { state, dispatch } = useStore();
 
     const timeItem = () => {
       const arr = [];
@@ -48,12 +44,7 @@ const CustomMenu = React.forwardRef(
     };
 
     const handleChange = (evt) => {
-      const value = evt.target.value;
-      console.log(value);
-      setValue({
-        ...value,
-        [evt.target.id]: value,
-      });
+      dispatch({ type: evt.target.id, data: evt.target.value });
     };
 
     return (
@@ -62,11 +53,11 @@ const CustomMenu = React.forwardRef(
           <Form.Row>
             <Form.Group as={Col} controlId="startDate">
               <Form.Label>Start Date</Form.Label>
-              <FormControl autoFocus type="date" defaultValue={value.startDate} />
+              <FormControl autoFocus type="date" defaultValue={state.startDate} />
             </Form.Group>
             <Form.Group as={Col} controlId="startTime">
               <Form.Label>Time</Form.Label>
-              <Form.Control as="select" defaultValue={value.startTime}>
+              <Form.Control as="select" defaultValue={state.startTime}>
                 {timeItem()}
               </Form.Control>
             </Form.Group>
@@ -74,11 +65,11 @@ const CustomMenu = React.forwardRef(
           <Form.Row>
             <Form.Group as={Col} controlId="endDate">
               <Form.Label>End Date</Form.Label>
-              <FormControl autoFocus type="date" defaultValue={value.endDate} />
+              <FormControl autoFocus type="date" defaultValue={state.endDate} />
             </Form.Group>
             <Form.Group as={Col} controlId="endTime">
               <Form.Label>Time</Form.Label>
-              <Form.Control as="select" defaultValue={value.endTime}>
+              <Form.Control as="select" defaultValue={state.endTime}>
                 {timeItem()}
               </Form.Control>
             </Form.Group>
