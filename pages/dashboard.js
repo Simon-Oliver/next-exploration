@@ -1,13 +1,17 @@
-import React from "react";
-import Temp from "../components/temp";
+import React from 'react';
+import Temp from '../components/temp';
+import Graph from '../components/Widget/Graph';
 
-import style from "./dashboard.module.css";
+import style from '../components/dashboard.module.css';
 
 export default function dashboard() {
   return (
-    <div className={style.container}>
+    <>
       <Temp></Temp>
       <Temp></Temp>
-    </div>
+      <Graph></Graph>
+      <Temp></Temp>
+      <Temp></Temp>
+    </>
   );
 }

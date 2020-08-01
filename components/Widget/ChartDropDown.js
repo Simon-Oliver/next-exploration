@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStore } from './store';
+import { useStore } from '../store';
 
 import { Card, Dropdown, FormControl, Form, Row, Col } from 'react-bootstrap';
 
@@ -82,7 +82,7 @@ const CustomMenu = React.forwardRef(
 
 const Bootstrap = () => {
   return (
-    <Dropdown>
+    <Dropdown drop="left">
       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
         <FontAwesomeIcon icon={faChevronDown} size="1x" />
       </Dropdown.Toggle>

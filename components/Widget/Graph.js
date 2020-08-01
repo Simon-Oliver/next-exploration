@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
-import { useStore } from '../components/store';
+import { useStore } from '../store';
 import moment from 'moment';
 
 import {
@@ -18,9 +18,9 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import ChartDropDown from '../components/ChartDropDown';
+import ChartDropDown from './ChartDropDown';
 
-import style from './lineChart.module.css';
+import style from './Graph.module.css';
 
 const data = [
   { name: '00:00', temp: 42, hum: 55 },
@@ -51,7 +51,6 @@ const data = [
 ];
 
 const filterData = (startTime, endTime, data) => {
-  console.log(startTime, endTime);
   const format = 'hh:mm';
   startTime = moment(startTime, format).subtract(1, 'hours');
   endTime = moment(endTime, format).add(1, 'hours');
