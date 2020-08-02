@@ -53,11 +53,16 @@ const CustomMenu = React.forwardRef(
           <Form.Row>
             <Form.Group as={Col} controlId="startDate">
               <Form.Label>Start Date</Form.Label>
-              <FormControl autoFocus type="date" defaultValue={state.startDate} />
+              <FormControl
+                autoFocus
+                type="date"
+                defaultValue={state.startDate}
+                style={{ width: '130px' }}
+              />
             </Form.Group>
             <Form.Group as={Col} controlId="startTime">
               <Form.Label>Time</Form.Label>
-              <Form.Control as="select" defaultValue={state.startTime}>
+              <Form.Control as="select" defaultValue={state.startTime} style={{ width: '100px' }}>
                 {timeItem()}
               </Form.Control>
             </Form.Group>
@@ -65,11 +70,16 @@ const CustomMenu = React.forwardRef(
           <Form.Row>
             <Form.Group as={Col} controlId="endDate">
               <Form.Label>End Date</Form.Label>
-              <FormControl autoFocus type="date" defaultValue={state.endDate} />
+              <FormControl
+                autoFocus
+                type="date"
+                defaultValue={state.endDate}
+                style={{ width: '130px' }}
+              />
             </Form.Group>
             <Form.Group as={Col} controlId="endTime">
               <Form.Label>Time</Form.Label>
-              <Form.Control as="select" defaultValue={state.endTime}>
+              <Form.Control as="select" defaultValue={state.endTime} style={{ width: '100px' }}>
                 {timeItem()}
               </Form.Control>
             </Form.Group>
