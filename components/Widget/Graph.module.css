@@ -10,7 +10,7 @@
     0 1px 3px 0 rgba(0, 0, 0, 0.2);
   padding: 2rem 0;
   grid-column: span 6;
-  grid-row: 1 / 4;
+  grid-row: 1 / 7;
 }
 
 @media (max-width: 1000px) {

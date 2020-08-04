@@ -7,7 +7,7 @@
 .item2 {
     background-color: blue;
     grid-column: span 4;
-    grid-row: span 3;
+    grid-row: span 5;
 }
 
 .item3 {

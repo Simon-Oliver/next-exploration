@@ -10,12 +10,14 @@ export default function dashboard() {
     <>
       <Temp></Temp>
       <Temp></Temp>
-      <Graph></Graph>
+      <Temp></Temp>
       <Timer></Timer>
       <Temp></Temp>
       <Temp></Temp>
       <Temp></Temp>
       <Temp></Temp>
+      <Temp></Temp>
+      <Graph></Graph>
     </>
   );
 }

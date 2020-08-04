@@ -1,36 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
-const useStyles = makeStyles((theme) => ({
-  card: {
-    width: '220px',
-    marginRight: theme.spacing(2),
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  label: {
-    margin: theme.spacing(1),
-    width: '9ch',
-  },
-  red: {
-    backgroundColor: 'red',
-  },
-}));
+import style from './Timer.module.css';
 
 export default function SimpleCard() {
-  const classes = useStyles();
   const [timer, setTimer] = useState('00:00');
   const [time, setTime] = useState({ minutes: 0, seconds: 0 });
   const [name, setName] = useState('');
@@ -114,42 +91,31 @@ export default function SimpleCard() {
   };
 
   return (
-    <Card className={`${classes.card}`}>
+    <Card className={style.card}>
       <audio id="a1" src="/audio/beep.wav"></audio>
       <Card.Body>
         {isActive ? (
-          <div>
-            <Typography variant="h5" component="h5">
-              {name}
-            </Typography>
-            <Typography variant="h3" component="h3">
-              {timer}
-            </Typography>
+          <div className={style.timer}>
+            <h3>{name}</h3>
+            <h2>{timer}</h2>
           </div>
         ) : (
-          <form onChange={(e) => changeHandler(e)} noValidate autoComplete="off">
-            <TextField value={name} id="name" label="Standard" />
-            <TextField
-              className={classes.label}
-              value={time.minutes}
-              id="minutes"
-              label="Minutes"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              className={classes.label}
-              value={time.seconds}
-              id="seconds"
-              label="Seconds"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </form>
+          <Form onChange={(e) => changeHandler(e)} noValidate autoComplete="off">
+            <Form.Group controlId="name">
+              <Form.Label>Timer Name</Form.Label>
+              <Form.Control type="text" placeholder="Timer Name" autoFocus defaultValue={name} />
+            </Form.Group>
+            <div className={style.container}>
+              <Form.Group controlId="minutes">
+                <Form.Label>Minutes</Form.Label>
+                <Form.Control type="number" defaultValue={time.minutes} min="0" />
+              </Form.Group>
+              <Form.Group controlId="seconds">
+                <Form.Label>Seconds</Form.Label>
+                <Form.Control type="number" defaultValue={time.seconds} min="0" max="59" />
+              </Form.Group>
+            </div>
+          </Form>
         )}
       </Card.Body>
       <Button size="small" onClick={(e) => toggle(e)}>
