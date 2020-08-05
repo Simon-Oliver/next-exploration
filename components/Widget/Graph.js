@@ -103,7 +103,7 @@ const Graph = () => {
           />
           <Tooltip />
           <Line type="monotone" dataKey="temp" stroke="#8884d8" fill="#8884d8" />
-          <Line type="monotone" dataKey="hum" stroke="#82ca9d" />
+          {data[0].hum ? <Line type="monotone" dataKey="hum" stroke="#82ca9d" /> : ''}
         </LineChart>
       </ResponsiveContainer>
     </div>
