@@ -1,38 +1,65 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Graph from '../components/Widget/Graph';
 
-const data = [
-  { name: '00:00', temp: 42 },
-  { name: '01:00', temp: 12 },
-  { name: '02:00', temp: 14 },
-  { name: '03:00', temp: 16 },
-  { name: '04:00', temp: 18 },
-  { name: '05:00', temp: 27 },
-  { name: '06:00', temp: 34 },
-  { name: '07:00', temp: 25 },
-  { name: '08:00', temp: 29 },
-  { name: '09:00', temp: 25 },
-  { name: '10:00', temp: 29 },
-  { name: '11:00', temp: 25 },
-  { name: '12:00', temp: 19 },
-  { name: '13:00', temp: 21 },
-  { name: '14:00', temp: 22 },
-  { name: '15:00', temp: 25 },
-  { name: '16:00', temp: 27 },
-  { name: '17:00', temp: 26 },
-  { name: '18:00', temp: 28 },
-  { name: '19:00', temp: 30 },
-  { name: '20:00', temp: 22 },
-  { name: '21:00', temp: 25 },
-  { name: '22:00', temp: 30 },
-  { name: '23:00', temp: 46 },
-  { name: '24:00', temp: 70 },
-];
+import moment from 'moment';
+
+const data = [];
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+const fetchData = async () => {
+  const res = await fetch('http://192.168.1.10:8000/temp');
+  const data = await res.json();
+  return data;
+};
 
 const TempProbe = () => {
+  const [temp, setTemp] = useState([{ name: '', hum: '', temp: '' }]);
+  let [delay, setDelay] = useState(1000);
+
+  useInterval(async () => {
+    const data = await fetchData();
+    const arr = [
+      ...temp,
+      { temp: Math.round(Number(data.temp.temp)), name: moment().format('HH:MM'), hum: ' ' },
+    ];
+    console.log('Arr------------', arr);
+    setTemp(arr);
+  }, delay);
+
+  useEffect(() => {
+    async function fetching() {
+      const data = await fetchData();
+
+      // If two decimals needed Math.round((Number(data.humidity) + Number.EPSILON) * 100) / 100;
+      data.temp = Math.round(Number(data.temp));
+      data.humidity = Math.round(Number(data.humidity));
+      setTemp(data);
+    }
+    fetching();
+  }, []);
+
   return (
     <>
-      <Graph data={data} title={'Probe Temperature'}></Graph>
+      <Graph data={temp} title={'Probe Temperature'}></Graph>
     </>
   );
 };
