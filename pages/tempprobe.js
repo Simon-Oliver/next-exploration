@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Graph from '../components/Widget/Graph';
+import { useStore } from '../components/store';
 
 import moment from 'moment';
 
@@ -32,34 +33,38 @@ const fetchData = async () => {
 };
 
 const TempProbe = () => {
+  const { state, dispatch } = useStore();
+
   const [temp, setTemp] = useState([{ name: '', hum: '', temp: '' }]);
   let [delay, setDelay] = useState(1000);
 
   useInterval(async () => {
     const data = await fetchData();
-    const arr = [
-      ...temp,
-      { temp: Math.round(Number(data.temp.temp)), name: moment().format('HH:MM'), hum: ' ' },
-    ];
-    console.log('Arr------------', arr);
-    setTemp(arr);
+    const arr = {
+      temp: Math.round(Number(data.temp.temp)),
+      name: moment().format('ss'),
+      hum: ' ',
+    };
+
+    dispatch({ type: 'SetTempProbeData', data: arr });
   }, delay);
 
-  useEffect(() => {
-    async function fetching() {
-      const data = await fetchData();
+  //   useEffect(() => {
+  //     async function fetching() {
+  //       const data = await fetchData();
 
-      // If two decimals needed Math.round((Number(data.humidity) + Number.EPSILON) * 100) / 100;
-      data.temp = Math.round(Number(data.temp));
-      data.humidity = Math.round(Number(data.humidity));
-      setTemp(data);
-    }
-    fetching();
-  }, []);
+  //       // If two decimals needed Math.round((Number(data.humidity) + Number.EPSILON) * 100) / 100;
+  //       data.temp = Math.round(Number(data.temp));
+  //       data.humidity = Math.round(Number(data.humidity));
+  //       data.name = moment().format('HH:mm');
+  //       setTemp(data);
+  //     }
+  //     fetching();
+  //   }, []);
 
   return (
     <>
-      <Graph data={temp} title={'Probe Temperature'}></Graph>
+      <Graph data={state.tempProbeData} title={'Probe Temperature'}></Graph>
     </>
   );
 };

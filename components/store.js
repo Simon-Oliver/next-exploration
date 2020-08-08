@@ -1,8 +1,15 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import moment from 'moment';
 
 const StoreContext = createContext();
 const initialState = {
-  chartDateTime: { startDate: '', endDate: '', startTime: '00:00', endTime: '24:00' },
+  chartDateTime: {
+    startDate: moment(),
+    endDate: moment().subtract(24, 'hours'),
+    startTime: '00:00',
+    endTime: '24:00',
+  },
+  tempProbeData: [{ name: '', hum: '', temp: '' }],
 };
 
 const reducer = (state, action) => {
@@ -22,6 +29,11 @@ const reducer = (state, action) => {
     case 'endTime':
       return {
         chartDateTime: { ...state.chartDateTime, endTime: action.data },
+      };
+    case 'SetTempProbeData':
+      return {
+        ...state,
+        tempProbeData: [...state.tempProbeData, action.data],
       };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);

@@ -46,10 +46,9 @@ const filterData = (startTime, endTime, data) => {
 const Graph = (props) => {
   const { state, dispatch } = useStore();
 
-  const { data, title } = props;
+  const { title, data } = props;
 
   useEffect(() => {
-    console.log('Props ----->', props);
     console.log(state);
   }, [state]);
 
