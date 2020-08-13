@@ -70,7 +70,7 @@ function NavBar(props) {
             <Link href="/dashboard" passHref>
               <Nav.Link>Dashboard</Nav.Link>
             </Link>
-            <Link href="/index" passHref>
+            <Link href="/controller" passHref>
               <Nav.Link>Controller</Nav.Link>
             </Link>
           </Nav>
