@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Temp from '../components/temp';
 import Graph from '../components/Widget/Graph';
 import Timer from '../components/Widget/Timer';
@@ -33,7 +33,41 @@ const data = [
   { name: '24:00', temp: 70, hum: 70 },
 ];
 
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+const fetchData = async () => {
+  const res = await fetch('http://192.168.1.10:8000');
+  const data = await res.json();
+  return data;
+};
+
 export default function dashboard() {
+  let [delay, setDelay] = useState(5000);
+
+  useInterval(async () => {
+    const data = await fetchData();
+    const arr = JSON.parse(data.data);
+    console.log(arr.slice(Math.max(arr.length - 5, 0)));
+  }, delay);
+
   return (
     <>
       <Temp></Temp>
